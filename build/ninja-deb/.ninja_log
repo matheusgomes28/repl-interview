@@ -1,0 +1,6 @@
+# ninja log v5
+2	4549	1675020445314499136	CMakeFiles/CommandInterpreter.dir/src/Control.cpp.o	bf5012702a06efe4
+4549	6938	1675020447708665600	libCommandInterpreter.so	e99b29a411591cc2
+6	3228	1675019647331230742	CMakeFiles/SanityTests.dir/sanity_tests/Main.cpp.o	5715277f0421d690
+6938	8011	1675020448781165508	SanityTests	7147ad9a17561212
+0	13	0	CMakeFiles/install.util	eebd48917a2fd17b

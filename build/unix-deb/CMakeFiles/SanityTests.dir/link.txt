@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/SanityTests.dir/sanity_tests/Main.cpp.o -o SanityTests  -Wl,-rpath,/home/matheus/development/faceit/build/unix-deb: libCommandInterpreter.so 

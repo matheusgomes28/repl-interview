@@ -1,0 +1,8 @@
+/home/matheus/development/faceit/build/unix-deb/CMakeFiles/CommandInterpreter.dir
+/home/matheus/development/faceit/build/unix-deb/CMakeFiles/SanityTests.dir
+/home/matheus/development/faceit/build/unix-deb/CMakeFiles/edit_cache.dir
+/home/matheus/development/faceit/build/unix-deb/CMakeFiles/rebuild_cache.dir
+/home/matheus/development/faceit/build/unix-deb/CMakeFiles/list_install_components.dir
+/home/matheus/development/faceit/build/unix-deb/CMakeFiles/install.dir
+/home/matheus/development/faceit/build/unix-deb/CMakeFiles/install/local.dir
+/home/matheus/development/faceit/build/unix-deb/CMakeFiles/install/strip.dir

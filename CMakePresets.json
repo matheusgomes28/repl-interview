@@ -1,0 +1,129 @@
+{
+    "version": 2,
+    "configurePresets": [
+        {
+            "name": "rel",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install"
+            }
+        },
+        {
+            "name": "deb",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install"
+            }
+        },
+        {
+            "name": "ninja",
+            "hidden": true,
+            "generator": "Ninja"
+        },
+        {
+            "name": "unix",
+            "hidden": true,
+            "generator": "Unix Makefiles"
+        },
+        {
+            "name": "vs2022",
+            "hidden": true,
+            "generator": "Visual Studio 17 2022"
+        },
+        {
+            "name": "vs2019",
+            "hidden": true,
+            "generator": "Visual Studio 16 2019"
+        },
+
+
+        {
+            "name": "ninja-rel",
+            "displayName": "Ninja Release",
+            "binaryDir": "${sourceDir}/build/ninja-rel",
+            "inherits": ["ninja", "rel"]
+        },
+        {
+            "name": "ninja-deb",
+            "displayName": "Ninja Debug",
+            "binaryDir": "${sourceDir}/build/ninja-deb",
+            "inherits": ["ninja", "deb"]
+        },
+        {
+            "name": "unix-rel",
+            "displayName": "Unix Make Release",
+            "binaryDir": "${sourceDir}/build/unix-rel",
+            "inherits": ["unix", "rel"]
+        },
+        {
+            "name": "unix-deb",
+            "displayName": "Unix Make Debug",
+            "binaryDir": "${sourceDir}/build/unix-deb",
+            "inherits": ["unix", "deb"]
+        },
+        {
+            "name": "vs2022-rel",
+            "displayName": "Visual Studio 2022 Release",
+            "binaryDir": "${sourceDir}/build/vs2022-rel",
+            "inherits": ["vs2022", "rel"]
+        },
+        {
+            "name": "vs2022-deb",
+            "displayName": "Visual Studio 2022 Debug",
+            "binaryDir": "${sourceDir}/build/vs2022-deb",
+            "inherits": ["vs2022", "deb"]
+        },
+        {
+            "name": "vs2019-rel",
+            "displayName": "Visual Studio 2019 Release",
+            "binaryDir": "${sourceDir}/build/vs2019-rel",
+            "inherits": ["vs2019", "rel"]
+        },
+        {
+            "name": "vs2019-deb",
+            "displayName": "Visual Studio 2019 Debug",
+            "binaryDir": "${sourceDir}/build/vs2019-deb",
+            "inherits": ["vs2019", "deb"]
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "vs2022-rel",
+            "displayName": "Visual Studio 2022 Release Build",
+            "configurePreset": "vs2022-rel",
+            "configuration": "Release"
+        },
+        {
+            "name": "vs2022-deb",
+            "displayName": "Visual Studio 2022 Debug Build",
+            "configurePreset": "vs2022-deb",
+            "configuration": "Debug"
+        },
+        {
+            "name": "unix-deb",
+            "displayName": "Unix Make Debug Build",
+            "configurePreset": "unix-deb",
+            "configuration": "Debug"
+        },
+        {
+            "name": "unix-rel",
+            "displayName": "Unix Make Release Build",
+            "configurePreset": "unix-rel",
+            "configuration": "Release"
+        },
+        {
+            "name": "ninja-rel",
+            "displayName": "Ninja Release Build",
+            "configurePreset": "ninja-rel",
+            "configuration": "Release"
+        },
+        {
+            "name": "ninja-deb",
+            "displayName": "Ninja Debug Build",
+            "configurePreset": "ninja-deb",
+            "configuration": "Debug"
+        }
+    ]
+}
