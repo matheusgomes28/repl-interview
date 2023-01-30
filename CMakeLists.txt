@@ -25,13 +25,15 @@ endif()
 # You may add any extra files that your implementation uses.
 add_library(CommandInterpreter SHARED
 	src/Control.cpp
+	src/CommandInterpreterImpl.cpp
+	src/CommandExamples.cpp
 )
 
 # Public interface headers for the library should go in this directory.
 target_include_directories(CommandInterpreter PUBLIC include)
 
 # Internal implementation headers and sources should go in this directory.
-target_include_directories(CommandInterpreter PRIVATE src)
+target_include_directories(CommandInterpreter PRIVATE src/include)
 
 # This definition is added when building the library, so that public
 # library functions may be exported correctly on Windows (see LibExport.h).
@@ -40,7 +42,6 @@ target_compile_definitions(CommandInterpreter PRIVATE -DCMDINT_BUILD_PRODUCER)
 # You may add any extra target properties you wish to this section, eg. to specify
 # a target C++ standard. Note that third party libraries or other external code
 # may not be used in the project.
-add_library()
 
 ####################################
 # Sanity Tests
@@ -51,6 +52,18 @@ add_executable(SanityTests
 )
 
 target_link_libraries(SanityTests PUBLIC CommandInterpreter)
+
+if (WIN32)
+    # I stayed away from exceptions in this implementation, however,
+	# the MSVC standard assumes that all extern functions will throw unless
+	# the following compiler flag is defined. If not added, the extern definitions
+	# coming from <iostream> will be assumed to throw, even when the standard 
+	# guarantees they dont. I.e. leave the definition below for the use of
+	# std::cout and it's << operator, as it doesn't throw anyway.
+    target_compile_options(CommandInterpreter PRIVATE /EHsc)
+    target_compile_options(SanityTests PRIVATE /EHsc)
+endif()
+
 
 ####################################
 # Installation

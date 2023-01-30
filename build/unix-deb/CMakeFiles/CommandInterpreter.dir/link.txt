@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -g -shared -Wl,-soname,libCommandInterpreter.so -o libCommandInterpreter.so CMakeFiles/CommandInterpreter.dir/src/Control.cpp.o 

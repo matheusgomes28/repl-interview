@@ -6,7 +6,7 @@
             "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/rel"
             }
         },
         {
@@ -14,42 +14,74 @@
             "hidden": true,
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install"
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/install/deb"
             }
         },
         {
-            "name": "ninja",
+            "name": "ninja-unix",
             "hidden": true,
-            "generator": "Ninja"
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic"
+            }
+        },
+        {
+            "name": "ninja-windows",
+            "hidden": true,
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} /W4"
+            }
         },
         {
             "name": "unix",
             "hidden": true,
-            "generator": "Unix Makefiles"
+            "generator": "Unix Makefiles",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic"
+            }
         },
         {
             "name": "vs2022",
             "hidden": true,
-            "generator": "Visual Studio 17 2022"
+            "generator": "Visual Studio 17 2022",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} /W4"
+            }
         },
         {
             "name": "vs2019",
             "hidden": true,
-            "generator": "Visual Studio 16 2019"
+            "generator": "Visual Studio 16 2019",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "$env{CMAKE_CXX_FLAGS} /W4"
+            }
         },
 
 
         {
-            "name": "ninja-rel",
-            "displayName": "Ninja Release",
-            "binaryDir": "${sourceDir}/build/ninja-rel",
-            "inherits": ["ninja", "rel"]
+            "name": "ninja-unix-rel",
+            "displayName": "Ninja Unix Release",
+            "binaryDir": "${sourceDir}/build/ninja-unix-rel",
+            "inherits": ["ninja-unix", "rel"]
         },
         {
-            "name": "ninja-deb",
-            "displayName": "Ninja Debug",
+            "name": "ninja-unix-deb",
+            "displayName": "Ninja Unix Debug",
+            "binaryDir": "${sourceDir}/build/ninja-unix-deb",
+            "inherits": ["ninja-unix", "deb"]
+        },
+        {
+            "name": "ninja-windows-rel",
+            "displayName": "Ninja Windows Release",
+            "binaryDir": "${sourceDir}/build/ninja-windows-rel",
+            "inherits": ["ninja-windows", "rel"]
+        },
+        {
+            "name": "ninja-windows-deb",
+            "displayName": "Ninja Windows Debug",
             "binaryDir": "${sourceDir}/build/ninja-deb",
-            "inherits": ["ninja", "deb"]
+            "inherits": ["ninja-windows", "deb"]
         },
         {
             "name": "unix-rel",
@@ -102,6 +134,18 @@
             "configuration": "Debug"
         },
         {
+            "name": "vs2019-rel",
+            "displayName": "Visual Studio 2019 Release Build",
+            "configurePreset": "vs2019-rel",
+            "configuration": "Release"
+        },
+        {
+            "name": "vs2019-deb",
+            "displayName": "Visual Studio 2019 Debug Build",
+            "configurePreset": "vs2019-deb",
+            "configuration": "Debug"
+        },
+        {
             "name": "unix-deb",
             "displayName": "Unix Make Debug Build",
             "configurePreset": "unix-deb",
@@ -114,15 +158,27 @@
             "configuration": "Release"
         },
         {
-            "name": "ninja-rel",
-            "displayName": "Ninja Release Build",
-            "configurePreset": "ninja-rel",
+            "name": "ninja-unix-rel",
+            "displayName": "Ninja Unix Release Build",
+            "configurePreset": "ninja-unix-rel",
             "configuration": "Release"
         },
         {
-            "name": "ninja-deb",
-            "displayName": "Ninja Debug Build",
-            "configurePreset": "ninja-deb",
+            "name": "ninja-unix-deb",
+            "displayName": "Ninja Unix Debug Build",
+            "configurePreset": "ninja-unix-deb",
+            "configuration": "Debug"
+        },
+        {
+            "name": "ninja-windows-rel",
+            "displayName": "Ninja Windows Release Build",
+            "configurePreset": "ninja-windows-rel",
+            "configuration": "Release"
+        },
+        {
+            "name": "ninja-windows-deb",
+            "displayName": "Ninja Windows Debug Build",
+            "configurePreset": "ninja-windows-deb",
             "configuration": "Debug"
         }
     ]

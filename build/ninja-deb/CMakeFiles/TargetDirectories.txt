@@ -1,8 +1,0 @@
-/home/matheus/development/faceit/build/ninja-deb/CMakeFiles/CommandInterpreter.dir
-/home/matheus/development/faceit/build/ninja-deb/CMakeFiles/SanityTests.dir
-/home/matheus/development/faceit/build/ninja-deb/CMakeFiles/edit_cache.dir
-/home/matheus/development/faceit/build/ninja-deb/CMakeFiles/rebuild_cache.dir
-/home/matheus/development/faceit/build/ninja-deb/CMakeFiles/list_install_components.dir
-/home/matheus/development/faceit/build/ninja-deb/CMakeFiles/install.dir
-/home/matheus/development/faceit/build/ninja-deb/CMakeFiles/install/local.dir
-/home/matheus/development/faceit/build/ninja-deb/CMakeFiles/install/strip.dir

@@ -1,5 +1,0 @@
-/home/matheus/development/faceit/install/CommandInterpreter/lib/libCommandInterpreter.so
-/home/matheus/development/faceit/install/CommandInterpreter/include/CommandInterpreter/Control.h
-/home/matheus/development/faceit/install/CommandInterpreter/include/CommandInterpreter/LibExport.h
-/home/matheus/development/faceit/install/SanityTests/bin/SanityTests
-/home/matheus/development/faceit/install/SanityTests/lib/libCommandInterpreter.so
