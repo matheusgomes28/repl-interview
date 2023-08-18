@@ -97,8 +97,11 @@ bool repl::Interpreter::queueCommand(std::string const& command_str)
 {
 	// TODO Check the command_str split isn't empty
 	auto const split_commands = space_split(command_str);
-	
-	// Prob check : what if command string is empty?
+	if (split_commands.size() == 0)
+	{
+		return false;
+	}
+
 	auto const command_name = std::string{begin(split_commands[0]), end(split_commands[0])};
 
 	auto const found = _commands.find(command_name);

@@ -27,6 +27,12 @@ set(CMAKE_CXX_EXTENSIONS "Off")
 #)
 
 #target_link_libraries(SanityTests PUBLIC CommandInterpreter)
+#############################
+# Reworked Targets ##########
+#############################
+
+add_subdirectory(src/repl)
+
 
 if (WIN32)
     # I stayed away from exceptions in this implementation, however,
