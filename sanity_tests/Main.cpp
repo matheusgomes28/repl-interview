@@ -11,11 +11,11 @@ namespace
 {
 	bool TestRegisterCommandBeforeInit()
 	{
-		CmdInt::CommandHandler handler = [](std::vector<CmdInt::CommandArgument> const& /* args */) -> CmdInt::CommandArgument
+		repl::CommandHandler handler = [](std::vector<repl::CommandArgument> const& /* args */) -> repl::CommandArgument
 		{
 			return 0;
 		};
-		CmdInt::CommandFunction test_func{handler, std::nullopt};
+		repl::CommandFunction test_func{handler, std::nullopt};
 		return CmdInt_RegisterCommand("something", test_func) == false;
 	}
 
@@ -40,11 +40,11 @@ namespace
 
 	bool TestRegisterEmptyString()
 	{
-		CmdInt::CommandHandler handler = [](std::vector<CmdInt::CommandArgument> const& /* args */) -> CmdInt::CommandArgument
+		repl::CommandHandler handler = [](std::vector<repl::CommandArgument> const& /* args */) -> repl::CommandArgument
 		{
 			return 0;
 		};
-		CmdInt::CommandFunction test_func{handler, std::nullopt};
+		repl::CommandFunction test_func{handler, std::nullopt};
 		CmdInt_Initialise();
 		auto const result = CmdInt_RegisterCommand("", test_func);
 		CmdInt_ShutDown();
@@ -54,11 +54,11 @@ namespace
 
 	bool TestRegisterInvalidCommand()
 	{
-		CmdInt::CommandHandler handler = [](std::vector<CmdInt::CommandArgument> const& /* args */) -> CmdInt::CommandArgument
+		repl::CommandHandler handler = [](std::vector<repl::CommandArgument> const& /* args */) -> repl::CommandArgument
 		{
 			return 0;
 		};
-		CmdInt::CommandFunction test_func{handler, std::nullopt};
+		repl::CommandFunction test_func{handler, std::nullopt};
 		CmdInt_Initialise();
 		auto const result = CmdInt_RegisterCommand("somthing with spaces", test_func);
 		CmdInt_ShutDown();
@@ -68,11 +68,11 @@ namespace
 
 	bool TestRegisterValidCommand()
 	{
-		CmdInt::CommandHandler handler = [](std::vector<CmdInt::CommandArgument> const& /* args */) -> CmdInt::CommandArgument
+		repl::CommandHandler handler = [](std::vector<repl::CommandArgument> const& /* args */) -> repl::CommandArgument
 		{
 			return 0;
 		};
-		CmdInt::CommandFunction test_func{handler, std::nullopt};
+		repl::CommandFunction test_func{handler, std::nullopt};
 		CmdInt_Initialise();
 		auto const result = CmdInt_RegisterCommand("some_command", test_func);
 		CmdInt_ShutDown();
@@ -83,14 +83,14 @@ namespace
 	bool TestCallCommand()
 	{
 		std::string result;
-		CmdInt::CommandCallback callback = [&result](std::string const& output) {
+		repl::CommandCallback callback = [&result](std::string const& output) {
 			result = output;
 		};
-		CmdInt::CommandHandler handler = [](std::vector<CmdInt::CommandArgument> const& /* args */) -> CmdInt::CommandArgument
+		repl::CommandHandler handler = [](std::vector<repl::CommandArgument> const& /* args */) -> repl::CommandArgument
 		{
 			return std::string{"success"};
 		};
-		CmdInt::CommandFunction test_func{handler, std::nullopt};
+		repl::CommandFunction test_func{handler, std::nullopt};
 		CmdInt_Initialise();
 		CmdInt_RegisterCallback(callback);
 		auto const register_result = CmdInt_RegisterCommand("some_command", test_func);
@@ -109,13 +109,13 @@ namespace
 	bool TestAddTwoNumbers()
 	{
 		std::string result;
-		CmdInt::CommandCallback callback = [&result](std::string const& output) {
+		repl::CommandCallback callback = [&result](std::string const& output) {
 			result = output;
 		};
 
 		CmdInt_Initialise();
 		CmdInt_RegisterCallback(callback);
-		CmdInt_RegisterCommand("add", CmdInt::make_add_command());
+		CmdInt_RegisterCommand("add", repl::make_add_command());
 		CmdInt_QueueCommand("add 5 11");
 		CmdInt_Poll();
 		CmdInt_ShutDown();
@@ -126,13 +126,13 @@ namespace
 	bool TestEcho()
 	{
 		std::string result;
-		CmdInt::CommandCallback callback = [&result](std::string const& output) {
+		repl::CommandCallback callback = [&result](std::string const& output) {
 			result = output;
 		};
 
 		CmdInt_Initialise();
 		CmdInt_RegisterCallback(callback);
-		CmdInt_RegisterCommand("echo", CmdInt::make_echo_command());
+		CmdInt_RegisterCommand("echo", repl::make_echo_command());
 		CmdInt_QueueCommand("echo hello world");
 		CmdInt_Poll();
 		CmdInt_ShutDown();
@@ -145,13 +145,13 @@ namespace
 	bool TestCountdownValid()
 	{
 		std::string result;
-		CmdInt::CommandCallback callback = [&result](std::string const& output) {
+		repl::CommandCallback callback = [&result](std::string const& output) {
 			result = output;
 		};
 
 		CmdInt_Initialise();
 		CmdInt_RegisterCallback(callback);
-		CmdInt_RegisterCommand("countdown", CmdInt::make_countdown_command());
+		CmdInt_RegisterCommand("countdown", repl::make_countdown_command());
 		CmdInt_QueueCommand("countdown 10");
 		
 		// Mimic the real world calls that are at most 100ms apart
@@ -173,13 +173,13 @@ namespace
 	bool TestCountdownInvalid1()
 	{
 		std::string result;
-		CmdInt::CommandCallback callback = [&result](std::string const& output) {
+		repl::CommandCallback callback = [&result](std::string const& output) {
 			result = output;
 		};
 
 		CmdInt_Initialise();
 		CmdInt_RegisterCallback(callback);
-		CmdInt_RegisterCommand("countdown", CmdInt::make_countdown_command());
+		CmdInt_RegisterCommand("countdown", repl::make_countdown_command());
 		CmdInt_QueueCommand("countdown 11");
 		
 		// Mimic the real world calls that are at most 100ms apart
@@ -194,13 +194,13 @@ namespace
 	bool TestCountdownInvalid2()
 	{
 		std::string result;
-		CmdInt::CommandCallback callback = [&result](std::string const& output) {
+		repl::CommandCallback callback = [&result](std::string const& output) {
 			result = output;
 		};
 
 		CmdInt_Initialise();
 		CmdInt_RegisterCallback(callback);
-		CmdInt_RegisterCommand("countdown", CmdInt::make_countdown_command());
+		CmdInt_RegisterCommand("countdown", repl::make_countdown_command());
 		CmdInt_QueueCommand("countdown -1");
 		CmdInt_Poll();
 		CmdInt_ShutDown();

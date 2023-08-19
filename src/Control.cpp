@@ -19,23 +19,25 @@
 
 namespace
 {
-	static std::unique_ptr<CmdInt::CommandInterpreter> command_interpreter = nullptr;
+	static std::unique_ptr<repl::Interpreter> command_interpreter = nullptr;
 } // namespace
 
 
-
+// std::unique_ptr<Interpreter> make_interpreter();
 void CmdInt_Initialise()
 {
 	// Initialise your resources here.
 	if (!command_interpreter)
 	{
-		command_interpreter = std::make_unique<CmdInt::CommandInterpreter>();
+		command_interpreter = std::make_unique<repl::Interpreter>();
 		return;
 	}
 
 	// Could log it's alreayd created;
 }
 
+// void destroy_interpreter(Interpreter*);
+// Maybe not needed
 void CmdInt_ShutDown()
 {
 	if (command_interpreter)
@@ -47,6 +49,8 @@ void CmdInt_ShutDown()
 	command_interpreter = nullptr;
 }
 
+// Executes all commands in the queue
+// void execute_commands(Interpreter*);
 void CmdInt_Poll()
 {
 	if (!command_interpreter)
@@ -58,8 +62,9 @@ void CmdInt_Poll()
 	command_interpreter->poll();
 }
 
+// bool register_command(Interpreter*, char** command, (*handler)(arg_types))
 bool CmdInt_RegisterCommand(std::string const& command_name,
-  CmdInt::CommandFunction const& command)
+  repl::CommandFunction const& command)
 {
 	if (!command_interpreter)
 	{
@@ -70,6 +75,8 @@ bool CmdInt_RegisterCommand(std::string const& command_name,
 	return command_interpreter->registerCommand(command_name, command);
 }
 
+
+// queue_command(Interpreter*, char** command_str, (*callback)(arg_type))
 bool CmdInt_QueueCommand(std::string const& command_str)
 {
 	if (!command_interpreter)
@@ -81,7 +88,9 @@ bool CmdInt_QueueCommand(std::string const& command_str)
 	return command_interpreter->queueCommand(command_str);
 }
 
-void CmdInt_RegisterCallback(CmdInt::CommandCallback const& callback)
+
+// we dont need it
+void CmdInt_RegisterCallback(repl::CommandCallback const& callback)
 {
 	if (!command_interpreter)
 	{

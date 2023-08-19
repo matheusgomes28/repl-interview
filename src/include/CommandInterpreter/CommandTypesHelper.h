@@ -8,7 +8,7 @@
 #include <optional>
 #include <string_view>
 
-namespace CmdInt
+namespace repl
 {
     // Rename this to argument converter
     template <ArgumentType T>

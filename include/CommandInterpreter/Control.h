@@ -13,7 +13,7 @@
 #include <string>
 #include <variant>
 
-namespace CmdInt
+namespace repl
 {
     /**
      * @brief Argument type enums
@@ -108,7 +108,8 @@ CMDINT_API bool CmdInt_QueueCommand(std::string const& command);
  * 
  * This must be called before you queue a command!
  */
-CMDINT_API bool CmdInt_RegisterCommand(std::string const& name, CmdInt::CommandFunction const& function);
+CMDINT_API bool CmdInt_RegisterCommand(std::string const& name, repl::CommandFunction const& function);
+// CmdInt_RegisterCommand("sub", funct_obj)
 
 /**
  * @brief Registers a callback function to the command interpreter. The callback will
@@ -119,6 +120,6 @@ CMDINT_API bool CmdInt_RegisterCommand(std::string const& name, CmdInt::CommandF
  * @param callback a function object taking in a CommandArgument and returning a 
  * string representation of the command return value.
  */
-CMDINT_API void CmdInt_RegisterCallback(CmdInt::CommandCallback const& callback);
+CMDINT_API void CmdInt_RegisterCallback(repl::CommandCallback const& callback);
 
 #endif // COMMANDINTERPRETER_CONTROL_H

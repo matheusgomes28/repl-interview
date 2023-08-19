@@ -94,3 +94,5 @@ if(IS_ROOT_PROJECT)
 		LIBRARY DESTINATION "SanityTests/lib"
 	)
 endif()
+
+add_subdirectory(src/interpreter)

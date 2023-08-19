@@ -10,7 +10,7 @@
 #include <CommandInterpreter/Control.h>
 #include <CommandInterpreter/LibExport.h>
 
-namespace CmdInt
+namespace repl
 {
     /**
      * @brief Command function / argument pairs for execution
@@ -29,7 +29,7 @@ namespace CmdInt
      * Objects of CommandInterpreter type will hold their own
      * registered command map, callback and command execution queue.
      */
-    class CommandInterpreter
+    class Interpreter
     {
     public:
         bool registerCommand(std::string const& command_name, CommandFunction const& handler);
