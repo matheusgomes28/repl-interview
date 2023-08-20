@@ -3,6 +3,7 @@
 #include <CommandInterpreter/CommandTypesHelper.h>
 
 #include <iostream>
+#include <sstream>
 
 namespace
 {
@@ -71,14 +72,13 @@ CmdInt::add_handler(std::vector<CmdInt::CommandArgument> const& arguments)
     int sum = 0;
     for (auto const& argument : arguments)
     {
-        auto const maybe_val = CmdInt::convert_argument<int>(argument);
+        auto const str_val = CmdInt::convert_argument<std::string>(argument).value_or("0");
+        auto const maybe_val = CmdInt::TypeConverter<ArgumentType::INT>::convert(str_val);
         if (!maybe_val)
         {
-            // TODO : not the actual output but just
-            // for demonstration purposes
             return 0;
         }
-        sum += *maybe_val;
+        sum += CmdInt::convert_argument<int>(*maybe_val).value_or(0);
     }
 
     return sum;
@@ -87,6 +87,7 @@ CmdInt::add_handler(std::vector<CmdInt::CommandArgument> const& arguments)
 CmdInt::CommandArgument
 CmdInt::echo_handler(std::vector<CmdInt::CommandArgument> const& arguments)
 {
+    std::ostringstream output;
     for (auto const& argument : arguments)
     {
         auto const maybe_val = CmdInt::convert_argument<std::string>(argument);
@@ -94,10 +95,10 @@ CmdInt::echo_handler(std::vector<CmdInt::CommandArgument> const& arguments)
         {
             return std::string{"echo: invalid argument"};
         }
-        std::cout << *maybe_val << " ";
+        output << *maybe_val << " ";
     }
     
-    return std::string{"echo: finished"};
+    return output.str();
 }
 
 CmdInt::CommandArgument

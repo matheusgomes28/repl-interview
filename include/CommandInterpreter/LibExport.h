@@ -3,6 +3,8 @@
  * @brief Defines macros for exporting library funtions.
  */
 
+// cMake has export header generation
+
 #ifndef COMMANDINTERPRETER_LIBEXPORT_H
 #define COMMANDINTERPRETER_LIBEXPORT_H
 

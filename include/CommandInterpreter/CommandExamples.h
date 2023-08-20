@@ -14,7 +14,7 @@
 #include <optional>
 #include <vector>
 
-namespace CmdInt
+namespace repl
 {
 	CMDINT_API CommandArgument add_handler(std::vector<CommandArgument> const& arguments);
 	CMDINT_API CommandArgument echo_handler(std::vector<CommandArgument> const& arguments);

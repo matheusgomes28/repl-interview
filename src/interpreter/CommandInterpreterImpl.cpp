@@ -1,4 +1,4 @@
-#include "CommandInterpreter/CommandInterpreterImpl.h"
+#include "interpreter/CommandInterpreterImpl.h"
 
 #include <iterator>
 #include <string>
@@ -41,9 +41,9 @@ namespace
 		return output;
 	}
 
-	std::optional<std::vector<CmdInt::CommandArgument>> parse_arguments(
+	std::optional<std::vector<repl::CommandArgument>> parse_arguments(
 		std::vector<std::string_view> const& str_arguments,
-		CmdInt::ArgumentTypes const& types)
+		repl::ArgumentTypes const& types)
 	{
 		if (str_arguments.size() != types.size())
 		{
@@ -51,21 +51,21 @@ namespace
 		}
 		
 		// Attempt to cast each string to right arg
-		std::vector<CmdInt::CommandArgument> arguments;
+		std::vector<repl::CommandArgument> arguments;
 
 		for (std::size_t i = 0; i < str_arguments.size(); ++i)
 		{
-			std::optional<CmdInt::CommandArgument> curr_argument = std::nullopt;
+			std::optional<repl::CommandArgument> curr_argument = std::nullopt;
 			switch (types[i])
 			{
-			case CmdInt::ArgumentType::INT:
-				curr_argument = CmdInt::TypeConverter<CmdInt::ArgumentType::INT>::convert(str_arguments[i]);
+			case repl::ArgumentType::INT:
+				curr_argument = repl::TypeConverter<repl::ArgumentType::INT>::convert(str_arguments[i]);
 				break;
-			case CmdInt::ArgumentType::STR:
-				curr_argument = CmdInt::TypeConverter<CmdInt::ArgumentType::STR>::convert(str_arguments[i]);
+			case repl::ArgumentType::STR:
+				curr_argument = repl::TypeConverter<repl::ArgumentType::STR>::convert(str_arguments[i]);
 				break;
-			case CmdInt::ArgumentType::FLOAT:
-				curr_argument = CmdInt::TypeConverter<CmdInt::ArgumentType::FLOAT>::convert(str_arguments[i]);
+			case repl::ArgumentType::FLOAT:
+				curr_argument = repl::TypeConverter<repl::ArgumentType::FLOAT>::convert(str_arguments[i]);
 			}
 
 			// if callback was set, call it
@@ -80,9 +80,9 @@ namespace
 		return arguments;
 	}
 
-	std::vector<CmdInt::CommandArgument> make_arguments(std::vector<std::string_view> const& str_arguments)
+	std::vector<repl::CommandArgument> make_arguments(std::vector<std::string_view> const& str_arguments)
 	{
-		std::vector<CmdInt::CommandArgument> command_arguments;
+		std::vector<repl::CommandArgument> command_arguments;
 		std::transform(begin(str_arguments),
 		  end(str_arguments),
 		  back_inserter(command_arguments),
@@ -93,10 +93,12 @@ namespace
 	}
 } // namespace
 
-bool CmdInt::CommandInterpreter::queueCommand(std::string const& command_str)
+bool repl::Interpreter::queueCommand(std::string const& command_str)
 {
 	// TODO Check the command_str split isn't empty
 	auto const split_commands = space_split(command_str);
+	
+	// Prob check : what if command string is empty?
 	auto const command_name = std::string{begin(split_commands[0]), end(split_commands[0])};
 
 	auto const found = _commands.find(command_name);
@@ -130,7 +132,7 @@ bool CmdInt::CommandInterpreter::queueCommand(std::string const& command_str)
 	return true;
 }
 
-bool CmdInt::CommandInterpreter::registerCommand(std::string const& command_name, CommandFunction const& handler)
+bool repl::Interpreter::registerCommand(std::string const& command_name, CommandFunction const& handler)
 {
 	// either an empty string or it has spaces...
 	auto const split_commands = space_split(command_name);
@@ -149,7 +151,7 @@ bool CmdInt::CommandInterpreter::registerCommand(std::string const& command_name
 	return true;
 }
 
-void CmdInt::CommandInterpreter::poll()
+void repl::Interpreter::poll()
 {
 	// Perform any processing here.
 	for (std::size_t i = 0; i < _command_queue.size(); ++i)
@@ -180,7 +182,12 @@ void CmdInt::CommandInterpreter::poll()
 	}
 }
 
-void CmdInt::CommandInterpreter::setCallback(CommandCallback const& callback)
+void repl::Interpreter::setCallback(CommandCallback const& callback)
 {
 	_callback = callback;
+}
+
+std::unique_ptr<repl::Interpreter> repl::make_interpreter()
+{
+	return std::make_unique<repl::Interpreter>();
 }

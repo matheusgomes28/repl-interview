@@ -1,14 +1,17 @@
 #ifndef COMMAND_INTERPRETER_IMPL_H
 #define COMMAND_INTERPRETER_IMPL_H
 
+#include <interpreter/interpreter_export.h>
+
 #include <functional>
 #include <map>
+#include <memory>
 #include <queue>
 #include <string>
 
-#include <CommandInterpreter/CommandTypesHelper.h>
-#include <CommandInterpreter/Control.h>
-#include <CommandInterpreter/LibExport.h>
+#include "interpreter/interpreter_export.h"
+#include <interpreter/CommandTypesHelper.h>
+// #include <interpreter/Control.h>
 
 namespace repl
 {
@@ -29,13 +32,13 @@ namespace repl
      * Objects of CommandInterpreter type will hold their own
      * registered command map, callback and command execution queue.
      */
-    class Interpreter
+    REPL_INTERPRETER_EXPORT class Interpreter
     {
     public:
         bool registerCommand(std::string const& command_name, CommandFunction const& handler);
         bool queueCommand(std::string const& command);
         void setCallback(CommandCallback const& callback);
-        void poll();
+        void poll(); // rename this to execute commands
 
     // Since we've implemented everything without the need for
     // worker threads/async etc, there's nothing really to
@@ -45,5 +48,8 @@ namespace repl
         std::queue<Command> _command_queue;
         std::optional<CommandCallback> _callback;
     };
-}
+
+    // TODO redo documentation
+    REPL_INTERPRETER_EXPORT std::unique_ptr<Interpreter> make_interpreter();
+} // namespace repl
 #endif //COMMAND_INTERPRETER_IMPL_H

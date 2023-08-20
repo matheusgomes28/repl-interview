@@ -6,9 +6,10 @@
 #ifndef COMMANDINTERPRETER_CONTROL_H
 #define COMMANDINTERPRETER_CONTROL_H
 
-#include "CommandInterpreter/LibExport.h"
+#include "interpreter/interpreter_export.h"
 
 #include <functional>
+#include <memory>
 #include <optional>
 #include <string>
 #include <variant>
@@ -68,16 +69,6 @@ namespace repl
 // essentially just a "singleton", by exposing the implementation
 // class and letting users have multiple command interpreters
 
-/**
- * @brief Initialises resources within the library.
- *
- * Any calls to library functions will be ignored if the library
- * is not initialised.
- *
- * A call to this function should be paired eventually with a call
- * to @a CmdInt_ShutDown(), in order to clean up the resources.
- */
-CMDINT_API void CmdInt_Initialise();
 
 /**
  * @brief Cleans up resources within the library.
@@ -85,14 +76,14 @@ CMDINT_API void CmdInt_Initialise();
  * This function should be called once the library has finished
  * being used.
  */
-CMDINT_API void CmdInt_ShutDown();
+REPL_INTERPRETER_EXPORT void CmdInt_ShutDown();
 
 /**
  * @brief Invokes internal processing on the library.
  *
  * This function should be called regularly in order to process commands.
  */
-CMDINT_API void CmdInt_Poll();
+REPL_INTERPRETER_EXPORT void CmdInt_Poll();
 
 /**
  * @brief Adds command to the command queue.
@@ -100,7 +91,7 @@ CMDINT_API void CmdInt_Poll();
  * This function should be called with a valid command that has
  * previously been registered.
  */
-CMDINT_API bool CmdInt_QueueCommand(std::string const& command);
+REPL_INTERPRETER_EXPORT bool CmdInt_QueueCommand(std::string const& command);
 // TODO : Maybe this should return a bool
 
 /**
@@ -108,7 +99,7 @@ CMDINT_API bool CmdInt_QueueCommand(std::string const& command);
  * 
  * This must be called before you queue a command!
  */
-CMDINT_API bool CmdInt_RegisterCommand(std::string const& name, repl::CommandFunction const& function);
+REPL_INTERPRETER_EXPORT bool CmdInt_RegisterCommand(std::string const& name, repl::CommandFunction const& function);
 // CmdInt_RegisterCommand("sub", funct_obj)
 
 /**
@@ -120,6 +111,6 @@ CMDINT_API bool CmdInt_RegisterCommand(std::string const& name, repl::CommandFun
  * @param callback a function object taking in a CommandArgument and returning a 
  * string representation of the command return value.
  */
-CMDINT_API void CmdInt_RegisterCallback(repl::CommandCallback const& callback);
+REPL_INTERPRETER_EXPORT void CmdInt_RegisterCallback(repl::CommandCallback const& callback);
 
 #endif // COMMANDINTERPRETER_CONTROL_H

@@ -1,8 +1,8 @@
 #ifndef COMMAND_TYPES_H
 #define COMMAND_TYPES_H
 
-#include <CommandInterpreter/Control.h>
-
+// TODO : Rename this header
+#include <interpreter/public_api.h>
 
 #include <charconv>
 #include <optional>
