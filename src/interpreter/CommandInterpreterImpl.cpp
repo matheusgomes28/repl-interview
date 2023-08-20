@@ -1,4 +1,4 @@
-#include "CommandInterpreter/CommandInterpreterImpl.h"
+#include "interpreter/CommandInterpreterImpl.h"
 
 #include <iterator>
 #include <string>
@@ -185,4 +185,9 @@ void repl::Interpreter::poll()
 void repl::Interpreter::setCallback(CommandCallback const& callback)
 {
 	_callback = callback;
+}
+
+std::unique_ptr<repl::Interpreter> repl::make_interpreter()
+{
+	return std::make_unique<repl::Interpreter>();
 }

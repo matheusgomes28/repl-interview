@@ -3,6 +3,7 @@
 #include <CommandInterpreter/CommandTypesHelper.h>
 
 #include <iostream>
+#include <sstream>
 
 namespace
 {
@@ -21,21 +22,21 @@ namespace
     // Obviously, this only works if the "poll()" function was implemented the
     // way it was. I.e. it should only execute the commands it has at the time of
     // calling it, and ignore the other commands that were added during polling.
-    repl::CommandArgument
-    countdown_helper(std::vector<repl::CommandArgument> const& arguments)
+    CmdInt::CommandArgument
+    countdown_helper(std::vector<CmdInt::CommandArgument> const& arguments)
     {
         if (arguments.size() != 2)
         {
             return std::string{"countdown helper: invalid argument"};
         }
         
-        auto const last_call = repl::convert_argument<int>(arguments[0]);
+        auto const last_call = CmdInt::convert_argument<int>(arguments[0]);
         if (!last_call)
         {
             return std::string{"countdown helper: invalid argument"};
         }
 
-        auto const starting_count = repl::convert_argument<int>(arguments[1]);
+        auto const starting_count = CmdInt::convert_argument<int>(arguments[1]);
         if (!starting_count)
         {
             return std::string{"countdown helper: invalid argument"};
@@ -65,43 +66,43 @@ namespace
 
 } // namespace
 
-repl::CommandArgument
-repl::add_handler(std::vector<repl::CommandArgument> const& arguments)
+CmdInt::CommandArgument
+CmdInt::add_handler(std::vector<CmdInt::CommandArgument> const& arguments)
 {
     int sum = 0;
     for (auto const& argument : arguments)
     {
-        auto const maybe_val = repl::convert_argument<int>(argument);
+        auto const str_val = CmdInt::convert_argument<std::string>(argument).value_or("0");
+        auto const maybe_val = CmdInt::TypeConverter<ArgumentType::INT>::convert(str_val);
         if (!maybe_val)
         {
-            // TODO : not the actual output but just
-            // for demonstration purposes
             return 0;
         }
-        sum += *maybe_val;
+        sum += CmdInt::convert_argument<int>(*maybe_val).value_or(0);
     }
 
     return sum;
 }
 
-repl::CommandArgument
-repl::echo_handler(std::vector<repl::CommandArgument> const& arguments)
+CmdInt::CommandArgument
+CmdInt::echo_handler(std::vector<CmdInt::CommandArgument> const& arguments)
 {
+    std::ostringstream output;
     for (auto const& argument : arguments)
     {
-        auto const maybe_val = repl::convert_argument<std::string>(argument);
+        auto const maybe_val = CmdInt::convert_argument<std::string>(argument);
         if (!maybe_val)
         {
             return std::string{"echo: invalid argument"};
         }
-        std::cout << *maybe_val << " ";
+        output << *maybe_val << " ";
     }
     
-    return std::string{"echo: finished"};
+    return output.str();
 }
 
-repl::CommandArgument
-repl::countdown_handler(std::vector<repl::CommandArgument> const& arguments)
+CmdInt::CommandArgument
+CmdInt::countdown_handler(std::vector<CmdInt::CommandArgument> const& arguments)
 {
     if (arguments.size() != 1)
     {
@@ -116,7 +117,7 @@ repl::countdown_handler(std::vector<repl::CommandArgument> const& arguments)
     using namespace std::chrono;
     int now = static_cast<int>(duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count());
 
-    auto const starting_count = repl::convert_argument<int>(arguments[0]);
+    auto const starting_count = CmdInt::convert_argument<int>(arguments[0]);
     if (!starting_count)
     {
         return std::string{"countdown: invalid argument"};
@@ -136,13 +137,13 @@ repl::countdown_handler(std::vector<repl::CommandArgument> const& arguments)
     return std::string{"countdown: starting countdown"};
 }
 
-repl::CommandFunction repl::make_add_command()
+CmdInt::CommandFunction CmdInt::make_add_command()
 {
     CommandFunction add_function{add_handler, std::make_optional<ArgumentTypes>({ArgumentType::INT, ArgumentType::INT})};
     return add_function;
 }
 
-repl::CommandFunction repl::make_echo_command()
+CmdInt::CommandFunction CmdInt::make_echo_command()
 {
     //! no optional argument types -> function is variadic
     //! and user is more responsible for checking values!
@@ -150,7 +151,7 @@ repl::CommandFunction repl::make_echo_command()
     return echo_function;
 }
 
-repl::CommandFunction repl::make_countdown_command()
+CmdInt::CommandFunction CmdInt::make_countdown_command()
 {
     CommandFunction countdown_function{countdown_handler, std::make_optional<ArgumentTypes>({ArgumentType::INT})};
     return countdown_function;
