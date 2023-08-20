@@ -1,8 +1,6 @@
 #ifndef COMMAND_INTERPRETER_IMPL_H
 #define COMMAND_INTERPRETER_IMPL_H
 
-#include <interpreter/interpreter_export.h>
-
 #include <functional>
 #include <map>
 #include <memory>
