@@ -1,0 +1,4 @@
+
+set(CMAKE_CXX_SCAN_FOR_MODULES ON)
+add_executable(cmd_interpreter_tests main.cpp)
+target_link_libraries(cmd_interpreter_tests PRIVATE cmd_interpreter)
